@@ -164,7 +164,9 @@ public class Browser implements Closeable {
         this.recordAudio = builder.recordAudio;
         this.audioSampleRate = builder.audioSampleRate;
         this.audioChannel = builder.audioChannel;
-        this.browserVersion = builder.browserVersion;
+
+        this.browserVersion = getProperty(TEST_BROWSER_VERSION, builder.browserVersion);
+
         this.platform = builder.platform;
         this.timeout = builder.timeout;
         this.colorDistance = builder.colorDistance;
@@ -445,6 +447,11 @@ public class Browser implements Closeable {
                         + (id != null && !id.isEmpty() ? "_" + id : "");
 
                 capabilities.setCapability("testName", testNameCap);
+
+                if(browserVersion != null && !"".equals(browserVersion)) {
+                    capabilities.setCapability("version", browserVersion);
+                }
+
                 driver = new RemoteWebDriver(new URL(eusURL), capabilities);
             } catch (MalformedURLException e) {
                 String errMessage = "ElasTest EUS API URL is Null";
@@ -679,6 +686,11 @@ public class Browser implements Closeable {
                                 .getRemoteVideo(video));
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             }
+
+            if(browserVersion != null && !"".equals(browserVersion)) {
+                capabilities.setCapability("version", browserVersion);
+            }
+
 
             final int hubPort = GridHandler.getInstance().getHubPort();
             final String hubHost = GridHandler.getInstance().getHubHost();
