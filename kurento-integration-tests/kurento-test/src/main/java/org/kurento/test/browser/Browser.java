@@ -165,7 +165,7 @@ public class Browser implements Closeable {
         this.audioSampleRate = builder.audioSampleRate;
         this.audioChannel = builder.audioChannel;
 
-        this.browserVersion = getProperty(TEST_BROWSER_VERSION, builder.browserVersion);
+        this.browserVersion = getProperty("test.browser.version", builder.browserVersion);
 
         this.platform = builder.platform;
         this.timeout = builder.timeout;
